@@ -1,0 +1,20 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: Docker@2
+  inputs:
+    containerRegistry: '<Azure Container Registry>'
+    repository: 'ICE1'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
+
+- task: AzureWebAppContainer@1
+  inputs:
+    azureSubscription: 'My Azure Subscription'
+    appName: 'Jaina Jani'
+    containers: 'jainaICE1.azurecr.io/Jaina Jani:latest'
+
