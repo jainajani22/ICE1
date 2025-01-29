@@ -1,0 +1,19 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: Docker@2
+  inputs:
+    containerRegistry: '<Azure Container Registry>'
+    repository: '<App Name>'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
+
+- task: AzureWebAppContainer@1
+  inputs:
+    azureSubscription: '<Your Azure Subscription>'
+    appName: '<Your App Name>'
+    containers: '<Your Azure Container Registry>.azurecr.io/<Your App Name>:latest'
